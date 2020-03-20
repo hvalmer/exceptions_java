@@ -28,6 +28,7 @@ public class ProgramPersonalExceptions {
 			Reservation reservation = new Reservation(number, checkIn, checkOut);
 			System.out.println("Reservation: " + reservation);
 			
+			//Atualizando a data de reserva
 			System.out.println();
 			System.out.println("Enter date to update the reservation: ");
 			System.out.print("Check - in date (dd/MM/yyyy): ");
@@ -35,19 +36,14 @@ public class ProgramPersonalExceptions {
 			System.out.print("Check - out date (dd/MM/yyyy): ");
 			checkOut = sdf.parse(sca.next());
 			
-			Date now = new Date();
-			if(checkIn.before(now) || checkOut.before(now)) {
-				System.out.println("Error in reservation: Reservation dates for update must be future dates");
+			String error = reservation.updatesDates(checkIn, checkOut);
+			if(error != null) {
+				System.out.println("Error in reservation: " + error);
 			}
-			else if(!checkOut.after(checkIn)) {
-				System.out.println("Error in reservation: Check-out date must be after check-in date");
-			}
-			else {
-			reservation.updatesDates(checkIn, checkOut);
-			System.out.println("Reservation: " + reservation);
+			else{
+				System.out.println("Reservation: " + reservation);
 			}
 		}
-		
 		sca.close();
 	}
 }
